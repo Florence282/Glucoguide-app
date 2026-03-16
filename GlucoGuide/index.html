@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlucoGuide - Diabetes Monitoring</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css?v=1.2">
+</head>
+<body class="theme-default">
+    <!-- Accessibility Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="glass-header">
+        <nav class="navbar container">
+            <a href="#" class="logo" aria-label="GlucoGuide Home">
+                <i class="fa-solid fa-droplet text-primary"></i> GlucoGuide
+            </a>
+            
+            <button class="mobile-menu-btn" aria-label="Toggle Navigation Menu" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <ul class="nav-links">
+                <li><a href="#" data-target="home" class="nav-link active" aria-current="page">Home</a></li>
+                <li><a href="#" data-target="monitor" class="nav-link">Monitor</a></li>
+                <li><a href="#" data-target="calendar" class="nav-link">Calendar View</a></li>
+                <li><a href="#" data-target="diet" class="nav-link">Diet Guide</a></li>
+                <li><a href="#" data-target="exercise" class="nav-link">Exercise</a></li>
+                <li><a href="#" data-target="conditions" class="nav-link">Conditions</a></li>
+                <li><a href="#" data-target="symptoms" class="nav-link">Symptoms</a></li>
+                <li><a href="#" data-target="about" class="nav-link">About</a></li>
+                <li>
+                    <button id="settings-toggle-btn" class="icon-btn" aria-label="Accessibility Settings" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa-solid fa-universal-access"></i>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Accessibility Settings Panel -->
+    <aside id="accessibility-panel" class="glass-panel hidden" aria-label="Accessibility Options">
+        <div class="panel-header">
+            <h3>Accessibility Settings</h3>
+            <button id="close-settings-btn" class="icon-btn" aria-label="Close Settings">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        </div>
+        <div class="panel-content">
+            <div class="toggle-group">
+                <label for="dark-mode-toggle">Dark Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="toggle-group">
+                <label for="high-contrast-toggle">High Contrast / Color Blind</label>
+                <label class="switch">
+                    <input type="checkbox" id="high-contrast-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="toggle-group">
+                <label for="large-text-toggle">Large Text</label>
+                <label class="switch">
+                    <input type="checkbox" id="large-text-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="toggle-group">
+                <label for="simple-mode-toggle">Simple Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="simple-mode-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+    </aside>
+
+    <main id="main-content">
+        <!-- Home Section -->
+        <section id="home" class="view-section active">
+            <div class="container hero-container">
+                <div class="hero-text">
+                    <h1 class="hero-title">Monitor Your Blood Sugar Simply</h1>
+                    <p class="hero-subtitle">Track your readings and understand what they mean with clarity and ease.</p>
+                    <button class="btn btn-primary btn-large go-to-monitor">
+                        Start Tracking <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="container dashboard-grid mb-2">
+                <!-- Daily Checklist -->
+                <div class="glass-card widget-card">
+                    <div class="card-header border-none mb-1">
+                        <i class="fa-solid fa-list-check text-primary"></i>
+                        <h3>Daily Checklist</h3>
+                    </div>
+                    <div class="checklist-container">
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="chk-sugar"> Check Blood Sugar
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="chk-water"> Drink 8 Glasses of Water
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="chk-meds"> Take Medication (if prescribed)
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="custom-checkbox">
+                            <input type="checkbox" id="chk-exercise"> 30 Mins Light Exercise
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Water Tracker -->
+                <div class="glass-card widget-card text-center">
+                    <div class="card-header border-none justify-center mb-1">
+                        <i class="fa-solid fa-glass-water text-primary"></i>
+                        <h3>Water Intake</h3>
+                    </div>
+                    <div class="water-tracker">
+                        <div class="water-glasses" id="water-glasses">
+                            <!-- Glasses will be rendered via JS -->
+                        </div>
+                        <p class="mt-1"><strong id="water-count">0</strong> / 8 Glasses Today</p>
+                        <button id="add-water-btn" class="btn btn-secondary mt-1">
+                            <i class="fa-solid fa-plus"></i> Add Glass
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BMI Calculator -->
+                <div class="glass-card widget-card">
+                    <div class="card-header border-none mb-1">
+                        <i class="fa-solid fa-weight-scale text-primary"></i>
+                        <h3>BMI Calculator</h3>
+                    </div>
+                    <form id="bmi-form" class="bmi-form">
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="bmi-weight">Weight (kg)</label>
+                                <input type="number" id="bmi-weight" class="form-control" required min="20" max="300" step="0.1">
+                            </div>
+                            <div class="form-group flex-1">
+                                <label for="bmi-height">Height (cm)</label>
+                                <input type="number" id="bmi-height" class="form-control" required min="50" max="300">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-secondary w-100">Calculate</button>
+                    </form>
+                    <div id="bmi-result" class="bmi-result hidden mt-1 border-top pt-1 text-center"></div>
+                </div>
+
+                <!-- Reminders & Emergency Info -->
+                <div class="glass-card widget-card alert-widget">
+                    <div class="card-header border-none mb-1">
+                        <i class="fa-solid fa-bell text-warning"></i>
+                        <h3>Reminders</h3>
+                    </div>
+                    <div class="reminder-item mb-1">
+                        <strong><i class="fa-solid fa-capsules"></i> Medication:</strong> 
+                        <p class="text-muted text-sm">Follow your prescribed treatment schedule consistently.</p>
+                    </div>
+                    <div class="reminder-item mb-1">
+                        <strong><i class="fa-solid fa-user-doctor"></i> Doctor Visit:</strong> 
+                        <p class="text-muted text-sm">Schedule regular checkups every 3-6 months.</p>
+                    </div>
+                    <hr class="glass-divider my-1">
+                    <div class="emergency-info">
+                        <strong><i class="fa-solid fa-truck-medical text-danger"></i> Emergency Profile (Mock)</strong>
+                        <button class="btn btn-secondary btn-sm w-100 mt-1" onclick="alert('This would show a QR code or emergency medical summary for first responders.')">
+                            View Medical ID
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Monitor Section -->
+        <section id="monitor" class="view-section hidden">
+            <div class="container measure-container">
+                <div class="text-center mb-2">
+                    <h2>Blood Sugar Monitor</h2>
+                    <p class="text-muted">Enter your readings below to get instant interactive feedback.</p>
+                </div>
+
+                <div class="glass-card monitor-card">
+                    <form id="reading-form" class="reading-form">
+                        
+                        <div class="form-row">
+                            <div class="form-group flex-1">
+                                <label for="reading-context">Context <i class="fa-solid fa-circle-info tooltip" aria-label="When did you take this reading?"></i></label>
+                                <select id="reading-context" class="form-control" required aria-required="true">
+                                    <option value="fasting">Fasting (Before Meal)</option>
+                                    <option value="post-meal">Post-Meal (1-2 hrs after)</option>
+                                    <option value="random">Random (Anytime)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="reading-time">Time</label>
+                                <input type="time" id="reading-time" class="form-control" required aria-required="true">
+                            </div>
+                        </div>
+
+                        <div class="form-group main-input-group">
+                            <label for="glucose-level" class="sr-only">Enter blood sugar level</label>
+                            <input type="number" id="glucose-level" class="form-control huge-input" placeholder="Enter level" min="20" max="1000" step="1" required aria-required="true">
+                            <span class="unit-label">mg/dL</span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="voice-input-btn" class="btn btn-secondary icon-btn-large" aria-label="Use Microphone to enter reading">
+                                <i class="fa-solid fa-microphone"></i>
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-large flex-1 check-level-btn">
+                                <i class="fa-solid fa-clipboard-check"></i> Check Level
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+
+                <!-- Reading History & Trends -->
+                <div class="glass-card mt-2 hidden" id="history-section">
+                    <div class="flex-between mb-1">
+                        <h3>Recent Readings</h3>
+                        <div id="trend-indicator" class="trend-indicator text-muted" aria-live="polite">
+                            <!-- Trend will go here -->
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="history-table" aria-label="Recent blood sugar readings">
+                            <thead>
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Context</th>
+                                    <th>Level (mg/dL)</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="history-tbody">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Tracking Section -->
+        <section id="calendar" class="view-section hidden">
+            <div class="container measure-container">
+                <div class="text-center mb-2">
+                    <h2>Monthly Tracking <i class="fa-regular fa-calendar-days text-primary"></i></h2>
+                    <p class="text-muted">Review your logged readings across the month.</p>
+                </div>
+                
+                <div class="glass-card calendar-card">
+                    <div class="calendar-header">
+                        <button id="prev-month-btn" class="icon-btn" aria-label="Previous Month"><i class="fa-solid fa-chevron-left"></i></button>
+                        <h3 id="calendar-month-year">Month Year</h3>
+                        <button id="next-month-btn" class="icon-btn" aria-label="Next Month"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <!-- Days of Week Header -->
+                        <div class="calendar-day-header">Sun</div>
+                        <div class="calendar-day-header">Mon</div>
+                        <div class="calendar-day-header">Tue</div>
+                        <div class="calendar-day-header">Wed</div>
+                        <div class="calendar-day-header">Thu</div>
+                        <div class="calendar-day-header">Fri</div>
+                        <div class="calendar-day-header">Sat</div>
+                        
+                        <!-- Days will be injected here via JS -->
+                        <div id="calendar-body" class="calendar-body-grid"></div>
+                    </div>
+                </div>
+
+                <!-- Day Detail View (Appears below calendar on click) -->
+                <div id="day-detail-view" class="glass-card mt-2 hidden">
+                    <h3 id="detail-date-title" class="mb-1">Details for Date</h3>
+                    <div class="table-responsive">
+                        <table class="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Context</th>
+                                    <th>Level</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="detail-tbody">
+                                <!-- dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p id="no-data-msg" class="text-muted text-center hidden">No readings logged for this day.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diet Guide Section -->
+        <section id="diet" class="view-section hidden">
+            <div class="container measure-container">
+                <div class="text-center mb-2">
+                    <h2>Diet Guide <i class="fa-solid fa-apple-whole text-primary"></i></h2>
+                    <p class="text-muted">General recommendations to help manage your blood sugar levels.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="glass-card diet-card recommended-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-leaf text-success"></i>
+                            <h3>Recommended Foods</h3>
+                        </div>
+                        <ul class="styled-list check-list">
+                            <li><strong>Non-starchy Vegetables:</strong> Spinach, broccoli, carrots</li>
+                            <li><strong>Whole Grains:</strong> Oats, quinoa, brown rice</li>
+                            <li><strong>Lean Proteins:</strong> Fish, beans, lentils, chicken</li>
+                            <li><strong>Healthy Fats:</strong> Nuts, avocados, olive oil</li>
+                            <li><strong>Fruits:</strong> Berries, apples (in moderation)</li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-card diet-card limit-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-ban text-danger"></i>
+                            <h3>Foods to Limit</h3>
+                        </div>
+                        <ul class="styled-list cross-list">
+                            <li><strong>Sugary Drinks:</strong> Soda, sweet tea, fruit juice</li>
+                            <li><strong>Refined Carbs:</strong> White bread, white pasta, pastries</li>
+                            <li><strong>Processed Snacks:</strong> Chips, packaged crackers</li>
+                            <li><strong>Added Sugars:</strong> Candy, excessive honey</li>
+                            <li><strong>Trans Fats:</strong> Processed meats, fried fast food</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Symptoms Section -->
+        <section id="symptoms" class="view-section hidden">
+            <div class="container measure-container">
+                <div class="text-center mb-2">
+                    <h2>Symptoms Guide <i class="fa-solid fa-stethoscope text-primary"></i></h2>
+                    <p class="text-muted">Learn to recognize physical signs of high and low blood sugar.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="glass-card symptom-card high-sugar">
+                        <div class="card-header">
+                            <i class="fa-solid fa-arrow-trend-up text-danger"></i>
+                            <h3>High Sugar (Hyperglycemia)</h3>
+                        </div>
+                        <ul class="styled-list dot-list">
+                            <li>Excessive thirst or dry mouth</li>
+                            <li>Frequent urination, especially at night</li>
+                            <li>Fatigue and weakness</li>
+                            <li>Blurred vision</li>
+                            <li>Slow healing cuts or sores</li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-card symptom-card low-sugar">
+                        <div class="card-header">
+                            <i class="fa-solid fa-arrow-trend-down text-warning"></i>
+                            <h3>Low Sugar (Hypoglycemia)</h3>
+                        </div>
+                        <ul class="styled-list dot-list">
+                            <li>Shakiness, trembling, or jittery feeling</li>
+                            <li>Sweating or chills</li>
+                            <li>Dizziness or lightheadedness</li>
+                            <li>Confusion or difficulty concentrating</li>
+                            <li>Intense hunger or nausea</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exercise Suggestion Section -->
+        <section id="exercise" class="view-section hidden">
+            <div class="container measure-container">
+                <div class="text-center mb-2">
+                    <h2>Active Movement <i class="fa-solid fa-person-running text-primary"></i></h2>
+                    <p class="text-muted">Simple, effective physical exercises to help manage your blood sugar levels gently.</p>
+                </div>
+                
+                <!-- Gentle activity warning -->
+                <div class="glass-card mb-2" style="background: rgba(42, 122, 151, 0.05); border-left: 4px solid var(--primary);">
+                    <p><strong><i class="fa-solid fa-triangle-exclamation"></i> Quick Tip:</strong> Always stretch before exercising and pause if you feel dizzy or short of breath. Keep a fast-acting carb (like juice) nearby just in case your sugar drops.</p>
+                </div>
+                
+                <div class="dashboard-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <!-- Exercise 1 -->
+                    <div class="glass-card result-card" style="border-left-color: var(--status-normal);">
+                        <h3 class="mb-1"><i class="fa-solid fa-shoe-prints text-normal"></i> Brisk Walking</h3>
+                        <p class="mb-1 text-muted">A simple, highly effective way to lower blood glucose and improve heart health without over-straining.</p>
+                        <ul class="about-list" style="list-style: none; padding-left: 0;">
+                            <li><strong>Frequency:</strong> 3-5 times a week</li>
+                            <li><strong>Duration:</strong> 30 minutes</li>
+                            <li><strong>Pace:</strong> Fast enough to increase heart rate, but you should still be able to hold a conversation.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Exercise 2 -->
+                    <div class="glass-card result-card" style="border-left-color: var(--primary);">
+                        <h3 class="mb-1"><i class="fa-solid fa-person-swimming text-primary"></i> Swimming / Water Aerobics</h3>
+                        <p class="mb-1 text-muted">Water provides gentle resistance, giving you a full-body workout that is extremely easy on your joints.</p>
+                        <ul class="about-list" style="list-style: none; padding-left: 0;">
+                            <li><strong>Frequency:</strong> 2-3 times a week</li>
+                            <li><strong>Duration:</strong> 20-30 minutes</li>
+                            <li><strong>Focus:</strong> Cardiovascular endurance and muscle toning.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid mt-2" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                    <!-- Exercise 3 -->
+                    <div class="glass-card result-card" style="border-left-color: var(--status-elevated);">
+                        <h3 class="mb-1"><i class="fa-solid fa-bicycle text-elevated"></i> Light Cycling</h3>
+                        <p class="mb-1 text-muted">Excellent for leg strength and cardiovascular health. Can be done outdoors or on a stationary bike.</p>
+                        <ul class="about-list" style="list-style: none; padding-left: 0;">
+                            <li><strong>Frequency:</strong> 3 times a week</li>
+                            <li><strong>Duration:</strong> 15-30 minutes</li>
+                            <li><strong>Tip:</strong> Ensure the bike seat height is comfortable to avoid knee strain.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Exercise 4 -->
+                    <div class="glass-card result-card" style="border-left-color: #9c27b0;">
+                        <h3 class="mb-1"><i class="fa-solid fa-spa" style="color: #9c27b0;"></i> Yoga & Stretching</h3>
+                        <p class="mb-1 text-muted">Helps lower stress (which can spike blood sugar), improves flexibility, and builds core strength.</p>
+                        <ul class="about-list" style="list-style: none; padding-left: 0;">
+                            <li><strong>Frequency:</strong> Daily or every other day</li>
+                            <li><strong>Duration:</strong> 15-20 minutes</li>
+                            <li><strong>Focus:</strong> Deep breathing, gentle poses, and relaxation.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compromising Conditions Section -->
+        <section id="conditions" class="view-section hidden">
+            <div class="container measure-container">
+                <div class="text-center mb-2">
+                    <h2>Compromising Conditions <i class="fa-solid fa-viruses text-primary"></i></h2>
+                    <p class="text-muted">Learn how other illnesses, medications, and stressors can unexpectedly spike your blood sugar levels.</p>
+                </div>
+
+                <div class="glass-card mb-2" style="background: rgba(42, 122, 151, 0.05); border-left: 4px solid var(--primary);">
+                    <p><strong><i class="fa-solid fa-user-doctor"></i> Important:</strong> If your blood sugar is consistently high during an illness, or you are experiencing vomiting/diarrhea, contact your healthcare provider immediately. This is not medical advice.</p>
+                </div>
+
+                <div class="grid-2">
+                    <!-- Condition 1: Infection -->
+                    <div class="glass-card diet-card limit-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-head-side-cough text-danger"></i>
+                            <h3>Infections & Illness</h3>
+                        </div>
+                        <p class="mb-1 text-muted">When you are sick (like a cold, flu, or infection), your body releases hormones to fight the illness. These hormones raise blood sugar levels and increase insulin resistance.</p>
+                        <ul class="styled-list cross-list">
+                            <li><strong>Action:</strong> Check blood sugar more frequently (every 2-4 hours).</li>
+                            <li><strong>Action:</strong> Stay heavily hydrated to flush excess sugar.</li>
+                            <li><strong>Action:</strong> Continue taking diabetes medication unless advised otherwise by a doctor.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Condition 2: Stress -->
+                    <div class="glass-card symptom-card high-sugar">
+                        <div class="card-header">
+                            <i class="fa-solid fa-bolt text-danger"></i>
+                            <h3>Physical & Mental Stress</h3>
+                        </div>
+                        <p class="mb-1 text-muted">Severe physical trauma, surgery, or extreme mental anxiety triggers the "fight or flight" response, dumping massive amounts of glucose and cortisol into the bloodstream.</p>
+                        <ul class="styled-list cross-list">
+                            <li><strong>Action:</strong> Practice the deep-breathing exercises found in the Exercise tab.</li>
+                            <li><strong>Action:</strong> Identify stress triggers and remove them if possible.</li>
+                            <li><strong>Action:</strong> Do not skip meals; keep your body fueled predictably.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Condition 3: Steroids -->
+                    <div class="glass-card symptom-card high-sugar">
+                        <div class="card-header">
+                            <i class="fa-solid fa-pills text-danger"></i>
+                            <h3>Steroid Medications</h3>
+                        </div>
+                        <p class="mb-1 text-muted">Corticosteroids (often prescribed for asthma, arthritis, or severe allergies) are notorious for causing drastic spikes in blood glucose levels.</p>
+                        <ul class="styled-list cross-list">
+                            <li><strong>Action:</strong> Inform your doctor that you have diabetes before starting steroids.</li>
+                            <li><strong>Action:</strong> Monitor readings closely; your insulin/medication dose may need adjusting.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Condition 4: Sleep Deprivation/Dehydration -->
+                    <div class="glass-card diet-card limit-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-bed text-warning"></i>
+                            <h3>Lack of Sleep / Dehydration</h3>
+                        </div>
+                        <p class="mb-1 text-muted">Poor sleep decreases insulin sensitivity. Meanwhile, severe dehydration concentrates the sugar in your bloodstream, causing readings to spike artificially high.</p>
+                        <ul class="styled-list dot-list">
+                            <li><strong>Action:</strong> Aim for 7-8 hours of quality sleep.</li>
+                            <li><strong>Action:</strong> Use the daily Water Tracker on the Home dashboard to ensure you drink at least 8 glasses of water.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="view-section hidden">
+            <div class="container measure-container">
+                <div class="glass-card mb-2">
+                    <h2 class="mb-1"><i class="fa-solid fa-circle-info text-primary"></i> About GlucoGuide</h2>
+                    <p style="font-size: var(--fs-large); line-height: 1.6; margin-bottom: 1.5rem;">
+                        GlucoGuide is a modern, privacy-first, fully client-side diabetes monitoring assistant. It is designed to replace traditional paper logs with a beautiful, accessible digital experience that requires no internet connection or external servers to function.
+                    </p>
+                    
+                    <h3 class="mt-2 mb-1" style="color: var(--primary);">Key Features</h3>
+                    <ul class="about-list" style="list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 1rem;"><i class="fa-solid fa-check text-normal mr-1"></i> <strong>Smart Monitoring:</strong> Instantly check your glucose levels against medical guidelines tailored for both Fasting and Post-Meal contexts. Receive dynamic lifestyle suggestions based on your results.</li>
+                        <li style="margin-bottom: 1rem;"><i class="fa-solid fa-calendar-days text-primary mr-1"></i> <strong>Monthly Calendar Tracking:</strong> Say goodbye to paper journals. Visually explore your entire history of readings plotted elegantly on an interactive calendar, complete with color-coded dot indicators denoting the severity of your logs on any given day.</li>
+                        <li style="margin-bottom: 1rem;"><i class="fa-solid fa-mobile-screen-button text-primary mr-1"></i> <strong>Offline Data Persistence:</strong> All your health records, including hydration metrics, daily checklist states, and blood sugar histories, are stored entirely locally on your device's browser memory ensuring 100% data privacy.</li>
+                        <li style="margin-bottom: 1rem;"><i class="fa-solid fa-universal-access text-primary mr-1"></i> <strong>Deep Accessibility:</strong> Crafted for universal access with large-text integration, high contrast color-blind modes, dark mode, and an elderly-oriented "Simple Mode" that strips away confusing dashboard widgets.</li>
+                        <li style="margin-bottom: 1rem;"><i class="fa-solid fa-heart-pulse text-primary mr-1"></i> <strong>Smart Dashboards:</strong> Quickly track your daily water intake, calculate your Body Mass Index (BMI) dynamically, and enforce healthy habits with persistent daily checklists.</li>
+                    </ul>
+
+                    <div class="mt-2" style="background: rgba(42, 122, 151, 0.1); padding: 1.5rem; border-radius: var(--border-radius); border-left: 4px solid var(--primary);">
+                        <strong>Medical Disclaimer:</strong> This application is a health-tracking simulation designed for educational awareness. It is NOT a diagnostic tool and does NOT prescribe medication. Always consult a certified medical professional or endocrinologist before making adjustments to your diabetes management routine.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Alert / Result Area Modal -->
+    <div id="result-area" class="result-area hidden" aria-live="polite">
+        <!-- Result cards will be injected here via JS -->
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js?v=1.2"></script>
+</body>
+</html>
